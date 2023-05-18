@@ -8,9 +8,9 @@ import (
 	context "context"
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	model "github.com/andatoshiki/toshiki-rssbot/internal/model"
 	storage "github.com/andatoshiki/toshiki-rssbot/internal/storage"
+	gomock "github.com/golang/mock/gomock"
 )
 
 // MockStorage is a mock of Storage interface.
