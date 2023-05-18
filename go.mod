@@ -12,7 +12,7 @@ require (
 	github.com/spf13/viper v1.13.0
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/atomic v1.9.0
-	go.uber.org/zap v1.23.0
+	go.uber.org/zap v1.24.0
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/telebot.v3 v3.1.0
 	gorm.io/driver/mysql v1.3.6
