@@ -184,7 +184,7 @@ func (t TplData) replaceHTMLTags(s string) string {
 
 func validateTPL() {
 	testData := []TplData{
-		TplData{
+		{
 			"RSS 源标识 - 无预览无telegraph的消息",
 			"这是标题",
 			"https://www.github.com/",
@@ -193,7 +193,7 @@ func validateTPL() {
 			"",
 			false,
 		},
-		TplData{
+		{
 			"RSS源标识 - 有预览无telegraph的消息",
 			"这是标题",
 			"https://www.github.com/",
@@ -202,7 +202,7 @@ func validateTPL() {
 			"#标签",
 			false,
 		},
-		TplData{
+		{
 			"RSS源标识 - 有预览有telegraph的消息",
 			"这是标题",
 			"https://www.github.com/",

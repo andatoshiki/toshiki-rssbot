@@ -28,11 +28,11 @@ func (r RemoveAllSubscription) Handle(ctx tb.Context) error {
 	var confirmKeys [][]tb.InlineButton
 	confirmKeys = append(
 		confirmKeys, []tb.InlineButton{
-			tb.InlineButton{
+			{
 				Unique: UnSubAllButtonUnique,
 				Text:   "确认",
 			},
-			tb.InlineButton{
+			{
 				Unique: CancelUnSubAllButtonUnique,
 				Text:   "取消",
 			},

@@ -23,3 +23,6 @@ run:
 
 clean:
 	rm toshiki-rssbot
+
+format:
+	gofmt -s -w .

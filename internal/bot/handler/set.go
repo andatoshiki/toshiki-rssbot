@@ -58,7 +58,7 @@ func (s *Set) Handle(ctx tb.Context) error {
 		// 添加按钮
 		text := fmt.Sprintf("%s %s", source.Title, source.Link)
 		replyButton = []tb.ReplyButton{
-			tb.ReplyButton{Text: text},
+			{Text: text},
 		}
 		replyKeys = append(replyKeys, replyButton)
 		attachData := &session.Attachment{
@@ -69,7 +69,7 @@ func (s *Set) Handle(ctx tb.Context) error {
 		data := session.Marshal(attachData)
 		setFeedItemBtns = append(
 			setFeedItemBtns, []tb.InlineButton{
-				tb.InlineButton{
+				{
 					Unique: SetFeedItemButtonUnique,
 					Text:   fmt.Sprintf("[%d] %s", source.ID, source.Title),
 					Data:   data,
@@ -200,11 +200,11 @@ func genFeedSetBtn(
 	}
 
 	feedSettingKeys := [][]tb.InlineButton{
-		[]tb.InlineButton{
+		{
 			toggleEnabledKey,
 			toggleNoticeKey,
 		},
-		[]tb.InlineButton{
+		{
 			toggleTelegraphKey,
 			setSubTagKey,
 		},

@@ -16,27 +16,27 @@ func TestSubscriptionStorageImpl(t *testing.T) {
 	s.Init(ctx)
 
 	subscriptions := []*model.Subscribe{
-		&model.Subscribe{
+		{
 			SourceID:           1,
 			UserID:             100,
 			EnableNotification: 1,
 		},
-		&model.Subscribe{
+		{
 			SourceID:           1,
 			UserID:             101,
 			EnableNotification: 1,
 		},
-		&model.Subscribe{
+		{
 			SourceID:           2,
 			UserID:             100,
 			EnableNotification: 1,
 		},
-		&model.Subscribe{
+		{
 			SourceID:           2,
 			UserID:             101,
 			EnableNotification: 1,
 		},
-		&model.Subscribe{
+		{
 			SourceID:           3,
 			UserID:             101,
 			EnableNotification: 1,
