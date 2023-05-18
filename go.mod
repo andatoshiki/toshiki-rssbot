@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/andatoshiki/telegraph-go v0.0.1
-	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang/mock v1.6.0
 	github.com/grokify/html-strip-tags-go v0.0.0-20200923094847-079d207a09f1
 	github.com/mmcdole/gofeed v1.1.3
