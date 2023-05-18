@@ -1,9 +1,9 @@
 package tgraph
 
 import (
+	"github.com/andatoshiki/telegraph-go"
 	"github.com/andatoshiki/toshiki-rssbot/internal/config"
 	"github.com/andatoshiki/toshiki-rssbot/internal/log"
-	"github.com/toshikidev/telegraph-go"
 )
 
 var (

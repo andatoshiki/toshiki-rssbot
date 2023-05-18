@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/golang/mock v1.6.0
 	github.com/grokify/html-strip-tags-go v0.0.0-20200923094847-079d207a09f1
-	github.com/toshikidev/telegrap-go v1.0.1
+	github.com/andatoshiki/telegrap-go v1.0.1
 	github.com/mmcdole/gofeed v1.1.3
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.13.0
