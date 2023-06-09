@@ -26,3 +26,6 @@ clean:
 
 format:
 	gofmt -s -w .
+
+token:
+	bash ./telegraph.sh
