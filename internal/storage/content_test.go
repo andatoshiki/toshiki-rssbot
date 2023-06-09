@@ -49,7 +49,7 @@ func TestContentStorageImpl(t *testing.T) {
 		},
 	)
 
-	t.Run(
+	t.Run(``
 		"hash id exist2", func(t *testing.T) {
 			exist, err := s.HashIDExist(ctx, content.HashID)
 			assert.Nil(t, err)

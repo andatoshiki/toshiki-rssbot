@@ -28,6 +28,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          extra_files: config.yml.sample README.md
+          extra_files: config.yml.sample
           build_flags: -v
           ldflags: -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.commit=${{ github.sha }}' -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.date=${{ env.BUILD_TIME }}' -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.version=${{ env.APP_VERSION }}'
