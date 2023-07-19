@@ -16,8 +16,8 @@ require (
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/telebot.v3 v3.1.0
 	gorm.io/driver/mysql v1.3.6
-	gorm.io/driver/sqlite v1.3.6
-	gorm.io/gorm v1.23.10
+	gorm.io/driver/sqlite v1.4.4
+	gorm.io/gorm v1.24.0
 )
 
 require (
