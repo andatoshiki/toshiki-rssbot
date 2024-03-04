@@ -1,4 +1,4 @@
-name: Release V1
+name: Build and Release toshiki-rssbot
 
 on:
   workflow_dispatch:
@@ -23,17 +23,6 @@ jobs:
           fetch-depth: 0
       - name: Fetch all tags
         run: git fetch --force --tags 
-      - name: Install requried depdencies
-        run: sudo apt install clang llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make tar xz-utils bzip2 gzip sed cpio libbz2-dev gcc-multilib g++-multilib build-essential
-      # - name: OSXCross for CGO Support
-      #   run: |
-      #     mkdir ../../osxcross
-      #     git clone https://github.com/toshikidev/osxcross-target.git ../../osxcross/target    
-      # - name: Downgrade libssl
-      #   run: |
-      #     echo 'deb http://security.ubuntu.com/ubuntu bionic-security main' | sudo tee -a /etc/apt/sources.list
-      #     sudo apt update && apt-cache policy libssl1.0-dev
-      #     sudo apt-get install libssl1.0-dev
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
