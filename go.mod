@@ -1,6 +1,6 @@
 module github.com/andatoshiki/toshiki-rssbot
 
-go 1.21
+go 1.18
 
 require (
 	github.com/andatoshiki/telegraph-go v0.0.1
