@@ -13,7 +13,7 @@ func Test_genHashID(t *testing.T) {
 		want string
 	}{
 		{
-			"case1", args{"http://www.ruanyifeng.com/blog/atom.xml", "tag:www.ruanyifeng.com,2019:/blog//1.2054"},
+			"case1", args{"https://github.blog/feed/", "tag:github.blog,2019:/blog//1.2054"},
 			"96b2e254",
 		},
 		{"case2", args{"https://rsshub.app/guokr/scientific", "https://www.guokr.com/article/445877/"}, "770fff44"},

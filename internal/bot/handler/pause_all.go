@@ -23,7 +23,7 @@ func (p *PauseAll) Command() string {
 }
 
 func (p *PauseAll) Description() string {
-	return "停止抓取所有订阅更新"
+	return "Pause and terminate fetching all subscription updates"
 }
 
 func (p *PauseAll) Handle(ctx tb.Context) error {
@@ -40,19 +40,19 @@ func (p *PauseAll) Handle(ctx tb.Context) error {
 
 	source, err := p.core.GetUserSubscribedSources(context.Background(), subscribeUserID)
 	if err != nil {
-		return ctx.Reply("系统错误")
+		return ctx.Reply("Internal system error")
 	}
 
 	for _, s := range source {
 		err := p.core.DisableSourceUpdate(context.Background(), s.ID)
 		if err != nil {
-			return ctx.Reply("暂停失败")
+			return ctx.Reply("Failed to pause")
 		}
 	}
 
-	reply := "订阅已全部暂停"
+	reply := "All subscription updates have been paused and terminated"
 	if channelChat != nil {
-		reply = fmt.Sprintf("频道 [%s](https://t.me/%s) 订阅已全部暂停", channelChat.Title, channelChat.Username)
+		reply = fmt.Sprintf("All subscriptions of channel [%s](https://t.me/%s) have been completely paused and terminated", channelChat.Title, channelChat.Username)
 	}
 	return ctx.Send(
 		reply, &tb.SendOptions{

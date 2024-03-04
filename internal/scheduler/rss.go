@@ -32,7 +32,7 @@ func NewRssTask(appCore *core.Core) *RssUpdateTask {
 	}
 }
 
-// RssUpdateTask rss更新任务
+// RssUpdateTask rss update task
 type RssUpdateTask struct {
 	observerList []RssUpdateObserver
 	isStop       atomic.Bool
@@ -133,7 +133,7 @@ func (t *RssUpdateTask) saveNewContents(
 		}
 
 		if exist {
-			// 已存在，跳过
+			// if exist, then end the process and skip
 			continue
 		}
 		newItems = append(newItems, item)

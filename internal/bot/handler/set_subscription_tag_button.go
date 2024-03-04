@@ -31,7 +31,6 @@ func (b *SetSubscriptionTagButton) Description() string {
 
 func (b *SetSubscriptionTagButton) feedSetAuth(c *tb.Callback, attachData *session.Attachment) bool {
 	subscriberID := attachData.GetUserId()
-	// 如果订阅者与按钮点击者id不一致，需要验证管理员权限
 	if subscriberID != c.Sender.ID {
 		channelChat, err := b.bot.ChatByID(subscriberID)
 		if err != nil {
@@ -49,17 +48,16 @@ func (b *SetSubscriptionTagButton) Handle(ctx tb.Context) error {
 	c := ctx.Callback()
 	attachData, err := session.UnmarshalAttachment(ctx.Callback().Data)
 	if err != nil {
-		return ctx.Edit("系统错误！")
+		return ctx.Edit("System error")
 	}
 
-	// 权限验证
 	if !b.feedSetAuth(c, attachData) {
-		return ctx.Send("无权限")
+		return ctx.Send("Permission or access rights not granted")
 	}
 	sourceID := uint(attachData.GetSourceId())
 	msg := fmt.Sprintf(
-		"请使用`/setfeedtag %d tags`命令为该订阅设置标签，tags为需要设置的标签，以空格分隔。（最多设置三个标签） \n"+
-			"例如：`/setfeedtag %d 科技 苹果`",
+		"Please utilize `/setfeedtag %d tags` command to configure topic tags for the subscription source, `tags` indicates the target tags to be configured. A maximum of 3 tags could be appended to each feed source and tags are required to split by spaces to match the internal grammatical syntax of the bot respectfully \n"+
+			"E.g.:`/setfeedtag %d anime moe`",
 		sourceID, sourceID,
 	)
 	return ctx.Edit(msg, &tb.SendOptions{ParseMode: tb.ModeMarkdown})

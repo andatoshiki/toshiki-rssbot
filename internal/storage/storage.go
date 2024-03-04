@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	// ErrRecordNotFound 数据不存在错误
+	// ErrRecordNotFound record not found error
 	ErrRecordNotFound = errors.New("record not found")
 )
 
@@ -18,14 +18,14 @@ type Storage interface {
 	Init(ctx context.Context) error
 }
 
-// User 用户存储接口
+// User user storage interface
 type User interface {
 	Storage
-	CrateUser(ctx context.Context, user *model.User) error
+	CreateUser(ctx context.Context, user *model.User) error
 	GetUser(ctx context.Context, id int64) (*model.User, error)
 }
 
-// Source 订阅源存储接口
+// Source subscription source storage interface
 type Source interface {
 	Storage
 	AddSource(ctx context.Context, source *model.Source) error
@@ -43,7 +43,7 @@ const (
 )
 
 type GetSubscriptionsOptions struct {
-	Count    int // 需要获取的数量，-1为获取全部
+	Count    int // Number of items to retrieve, -1 to retrieve all
 	Offset   int
 	SortType SubscriptionSortType
 }
@@ -77,10 +77,10 @@ type Subscription interface {
 
 type Content interface {
 	Storage
-	// AddContent 添加一条文章
+	// AddContent adds a new article
 	AddContent(ctx context.Context, content *model.Content) error
-	// DeleteSourceContents 删除订阅源的所有文章，返回被删除的文章数
+	// DeleteSourceContents deletes all articles of a subscription source and returns the number of deleted articles
 	DeleteSourceContents(ctx context.Context, sourceID uint) (int64, error)
-	// HashIDExist hash id 对应的文章是否已存在
+	// HashIDExist checks if an article with the given hash id already exists
 	HashIDExist(ctx context.Context, hashID string) (bool, error)
 }

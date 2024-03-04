@@ -1,0 +1,22 @@
+name: Push repo updates to Telegram
+
+on:
+  push:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: send custom message
+      uses: toshikidev/gh2tg-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          @${{ github.actor }} pushed new commit(s) to github.com/${{ github.repository }}
+
+          ${{ github.event.commits[0].message }}
+
+          ${{ github.sha }}

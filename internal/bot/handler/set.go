@@ -32,7 +32,7 @@ func (s *Set) Command() string {
 }
 
 func (s *Set) Description() string {
-	return "设置订阅"
+	return "Configure subscriptions"
 }
 
 func (s *Set) Handle(ctx tb.Context) error {
@@ -44,18 +44,18 @@ func (s *Set) Handle(ctx tb.Context) error {
 
 	sources, err := s.core.GetUserSubscribedSources(context.Background(), ownerID)
 	if err != nil {
-		return ctx.Reply("获取订阅失败")
+		return ctx.Reply("Failed to fetch subscriptions")
 	}
 	if len(sources) <= 0 {
-		return ctx.Reply("当前没有订阅")
+		return ctx.Reply("Currently no active subscriptions")
 	}
 
-	// 配置按钮
+	// Configuration button
 	var replyButton []tb.ReplyButton
 	replyKeys := [][]tb.ReplyButton{}
 	setFeedItemBtns := [][]tb.InlineButton{}
 	for _, source := range sources {
-		// 添加按钮
+		// Add button
 		text := fmt.Sprintf("%s %s", source.Title, source.Link)
 		replyButton = []tb.ReplyButton{
 			{Text: text},
@@ -79,7 +79,7 @@ func (s *Set) Handle(ctx tb.Context) error {
 	}
 
 	return ctx.Reply(
-		"请选择你要设置的源", &tb.ReplyMarkup{
+		"Please select the target subscription to configure", &tb.ReplyMarkup{
 			InlineKeyboard: setFeedItemBtns,
 		},
 	)
@@ -92,15 +92,15 @@ func (s *Set) Middlewares() []tb.MiddlewareFunc {
 const (
 	SetFeedItemButtonUnique = "set_feed_item_btn"
 	feedSettingTmpl         = `
-订阅<b>设置</b>
+Subscription<b>Setting</b>
 [id] {{ .source.ID }}
-[标题] {{ .source.Title }}
+[Title] {{ .source.Title }}
 [Link] {{.source.Link }}
-[抓取更新] {{if ge .source.ErrorCount .Count }}暂停{{else if lt .source.ErrorCount .Count }}抓取中{{end}}
-[抓取频率] {{ .sub.Interval }}分钟
-[通知] {{if eq .sub.EnableNotification 0}}关闭{{else if eq .sub.EnableNotification 1}}开启{{end}}
-[Telegraph] {{if eq .sub.EnableTelegraph 0}}关闭{{else if eq .sub.EnableTelegraph 1}}开启{{end}}
-[Tag] {{if .sub.Tag}}{{ .sub.Tag }}{{else}}无{{end}}
+[Interval] {{if ge .source.ErrorCount .Count }}Pause{{else if lt .source.ErrorCount .Count }}Fetching in progress{{end}}
+[Frequency] {{ .sub.Interval }}minute(s)
+[Notification] {{if eq .sub.EnableNotification 0}}Disable{{else if eq .sub.EnableNotification 1}}Enable{{end}}
+[Telegraph] {{if eq .sub.EnableTelegraph 0}}Disable{{else if eq .sub.EnableTelegraph 1}}Enable{{end}}
+[Tag] {{if .sub.Tag}}{{ .sub.Tag }}{{else}}None{{end}}
 `
 )
 
@@ -124,31 +124,31 @@ func (r *SetFeedItemButton) Description() string {
 func (r *SetFeedItemButton) Handle(ctx tb.Context) error {
 	attachData, err := session.UnmarshalAttachment(ctx.Callback().Data)
 	if err != nil {
-		return ctx.Edit("退订错误！")
+		return ctx.Edit("Un")
 	}
 
 	subscriberID := attachData.GetUserId()
-	// 如果订阅者与按钮点击者id不一致，需要验证管理员权限
+	// If the subscriber and the button clicker id are not the same, admin permissions need to be verified
 	if subscriberID != ctx.Callback().Sender.ID {
 		channelChat, err := r.bot.ChatByUsername(fmt.Sprintf("%d", subscriberID))
 		if err != nil {
-			return ctx.Edit("获取订阅信息失败")
+			return ctx.Edit("Failed to fetch subscription information")
 		}
 
 		if !chat.IsChatAdmin(r.bot, channelChat, ctx.Callback().Sender.ID) {
-			return ctx.Edit("获取订阅信息失败")
+			return ctx.Edit("Failed to fetch subscription information") 
 		}
 	}
 
 	sourceID := uint(attachData.GetSourceId())
 	source, err := r.core.GetSource(context.Background(), sourceID)
 	if err != nil {
-		return ctx.Edit("找不到该订阅源")
+		return ctx.Edit("Unable to find target subscription sources")
 	}
 
 	sub, err := r.core.GetSubscription(context.Background(), subscriberID, source.ID)
 	if err != nil {
-		return ctx.Edit("用户未订阅该rss")
+		return ctx.Edit("RSS feed not subscribed by user")
 	}
 
 	t := template.New("setting template")
@@ -167,36 +167,36 @@ func genFeedSetBtn(
 ) [][]tb.InlineButton {
 	setSubTagKey := tb.InlineButton{
 		Unique: SetSubscriptionTagButtonUnique,
-		Text:   "标签设置",
+		Text:   "Configure tags",
 		Data:   c.Data,
 	}
 
 	toggleNoticeKey := tb.InlineButton{
 		Unique: NotificationSwitchButtonUnique,
-		Text:   "开启通知",
+		Text:   "Enable notification",
 		Data:   c.Data,
 	}
 	if sub.EnableNotification == 1 {
-		toggleNoticeKey.Text = "关闭通知"
+		toggleNoticeKey.Text = "Disable notification"
 	}
 
 	toggleTelegraphKey := tb.InlineButton{
 		Unique: TelegraphSwitchButtonUnique,
-		Text:   "开启 Telegraph 转码",
+		Text:   "Enable Telegraph transcoding",
 		Data:   c.Data,
 	}
 	if sub.EnableTelegraph == 1 {
-		toggleTelegraphKey.Text = "关闭 Telegraph 转码"
+		toggleTelegraphKey.Text = "Disable Telegraph transcoding"
 	}
 
 	toggleEnabledKey := tb.InlineButton{
 		Unique: SubscriptionSwitchButtonUnique,
-		Text:   "暂停更新",
+		Text:   "Pause update",
 		Data:   c.Data,
 	}
 
 	if source.ErrorCount >= config.ErrorThreshold {
-		toggleEnabledKey.Text = "重启更新"
+		toggleEnabledKey.Text = "Restart update"
 	}
 
 	feedSettingKeys := [][]tb.InlineButton{

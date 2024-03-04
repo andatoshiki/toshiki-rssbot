@@ -8,7 +8,7 @@ import (
 	"github.com/andatoshiki/toshiki-rssbot/internal/log"
 )
 
-// Marshal 编码成字符串
+// Marshal encodes to a string
 func Marshal(a *Attachment) string {
 	bytes, err := proto.Marshal(a)
 	if err != nil {
@@ -18,7 +18,7 @@ func Marshal(a *Attachment) string {
 	return hex.EncodeToString(bytes)
 }
 
-// UnmarshalAttachment 从字符串解析透传信息
+// Unmarshal Attachment parses the transmitted information from a string
 func UnmarshalAttachment(data string) (*Attachment, error) {
 	bytes, err := hex.DecodeString(data)
 	if err != nil {

@@ -30,27 +30,27 @@ func (s *RemoveSubscription) Command() string {
 }
 
 func (s *RemoveSubscription) Description() string {
-	return "退订RSS源"
+	return "Unsubscribe RSS feed sources" // Unsubscribe RSS feed sources
 }
 
 func (s *RemoveSubscription) removeForChannel(ctx tb.Context, channelName string) error {
 	sourceURL := message.URLFromMessage(ctx.Message())
 	if sourceURL == "" {
-		return ctx.Send("频道退订请使用' /unsub @ChannelID URL ' 命令")
+		return ctx.Send("Please utilize `/unsub @channel_id URL` command to unsubscribe if you need to unsubscribe on behalf of your channel")
 	}
 
 	channelChat, err := s.bot.ChatByUsername(channelName)
 	if err != nil {
-		return ctx.Reply("获取频道信息错误")
+		return ctx.Reply("Failed to fetch channel information")
 	}
 
 	if !chat.IsChatAdmin(s.bot, channelChat, ctx.Sender().ID) {
-		return ctx.Reply("非频道管理员无法执行此操作")
+		return ctx.Reply("Operations executed by users of channel without administrative privileges are not permitted ")
 	}
 
 	source, err := s.core.GetSourceByURL(context.Background(), sourceURL)
 	if err != nil {
-		return ctx.Reply("获取订阅信息错误")
+		return ctx.Reply("Bot throw an error when fetching subscription information")
 	}
 
 	log.Infof("%d for [%d]%s unsubscribe %s", ctx.Chat().ID, source.ID, source.Title, source.Link)
@@ -59,11 +59,11 @@ func (s *RemoveSubscription) removeForChannel(ctx tb.Context, channelName string
 			"%d for [%d]%s unsubscribe %s failed, %v",
 			ctx.Chat().ID, source.ID, source.Title, source.Link, err,
 		)
-		return ctx.Reply("退订失败")
+		return ctx.Reply("Failed to unsubscribe") // Failed to unsubscribe
 	}
 	return ctx.Send(
 		fmt.Sprintf(
-			"频道 [%s](https://t.me/%s) 退订 [%s](%s) 成功",
+			"Successfully unsubscribed [%s](%s) from channel [%s](https://t.me/%s)",
 			channelChat.Title, channelChat.Username, source.Title, source.Link,
 		),
 		&tb.SendOptions{DisableWebPagePreview: true, ParseMode: tb.ModeMarkdown},
@@ -75,11 +75,11 @@ func (s *RemoveSubscription) removeForChat(ctx tb.Context) error {
 	if sourceURL == "" {
 		sources, err := s.core.GetUserSubscribedSources(context.Background(), ctx.Chat().ID)
 		if err != nil {
-			return ctx.Reply("获取订阅列表失败")
+			return ctx.Reply("Failed to fetch subscription list")
 		}
 
 		if len(sources) == 0 {
-			return ctx.Reply("没有订阅")
+			return ctx.Reply("No active subscription currently")
 		}
 
 		var unsubFeedItemButtons [][]tb.InlineButton
@@ -100,16 +100,16 @@ func (s *RemoveSubscription) removeForChat(ctx tb.Context) error {
 				},
 			)
 		}
-		return ctx.Reply("请选择你要退订的源", &tb.ReplyMarkup{InlineKeyboard: unsubFeedItemButtons})
+		return ctx.Reply("Please select the feed sources to unsubscribe", &tb.ReplyMarkup{InlineKeyboard: unsubFeedItemButtons})
 	}
 
 	if !chat.IsChatAdmin(s.bot, ctx.Chat(), ctx.Sender().ID) {
-		return ctx.Reply("非管理员无法执行此操作")
+		return ctx.Reply("Bot operational executions by non-administrative users are not permitted")
 	}
 
 	source, err := s.core.GetSourceByURL(context.Background(), sourceURL)
 	if err != nil {
-		return ctx.Reply("未订阅该RSS源")
+		return ctx.Reply("RSS feed not subscribed")
 	}
 
 	log.Infof("%d unsubscribe [%d]%s %s", ctx.Chat().ID, source.ID, source.Title, source.Link)
@@ -118,10 +118,10 @@ func (s *RemoveSubscription) removeForChat(ctx tb.Context) error {
 			"%d for [%d]%s unsubscribe %s failed, %v",
 			ctx.Chat().ID, source.ID, source.Title, source.Link, err,
 		)
-		return ctx.Reply("退订失败")
+		return ctx.Reply("Failed to unsubscribe!")
 	}
 	return ctx.Send(
-		fmt.Sprintf("[%s](%s) 退订成功！", source.Title, source.Link),
+		fmt.Sprintf("[%s](%s) Successfully unsubscribed!", source.Title, source.Link),
 		&tb.SendOptions{DisableWebPagePreview: true, ParseMode: tb.ModeMarkdown},
 	)
 }
@@ -160,27 +160,27 @@ func (r *RemoveSubscriptionItemButton) Description() string {
 
 func (r *RemoveSubscriptionItemButton) Handle(ctx tb.Context) error {
 	if ctx.Callback() == nil {
-		return ctx.Edit("内部错误！")
+		return ctx.Edit("Internal errors!")
 	}
 
 	attachData, err := session.UnmarshalAttachment(ctx.Callback().Data)
 	if err != nil {
-		return ctx.Edit("退订错误！")
+		return ctx.Edit("Bot throws an internal error!")
 	}
 
 	userID := attachData.GetUserId()
 	sourceID := uint(attachData.GetSourceId())
 	source, err := r.core.GetSource(context.Background(), sourceID)
 	if err != nil {
-		return ctx.Edit("退订错误！")
+		return ctx.Edit("Failed to unsubscribe ")
 	}
 
 	if err := r.core.Unsubscribe(context.Background(), userID, sourceID); err != nil {
 		log.Errorf("unsubscribe data %s failed, %v", ctx.Callback().Data, err)
-		return ctx.Edit("退订错误！")
+		return ctx.Edit("Unsubscribe processes threw an error!")
 	}
 
-	rtnMsg := fmt.Sprintf("[%d] <a href=\"%s\">%s</a> 退订成功", sourceID, source.Link, source.Title)
+	rtnMsg := fmt.Sprintf("[%d] <a href=\"%s\">%s</a> Successfully unsubscribed", sourceID, source.Link, source.Title)
 	return ctx.Edit(rtnMsg, &tb.SendOptions{ParseMode: tb.ModeHTML})
 }
 

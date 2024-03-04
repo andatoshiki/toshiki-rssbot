@@ -15,8 +15,7 @@ var (
 	version = "dev"
 	commit  = "none"
 	date    = "unknown"
-
-	ProjectName          string = "flowerss"
+	ProjectName          string = "toshiki-rssbot"
 	BotToken             string
 	Socks5               string
 	TelegraphToken       []string
@@ -32,31 +31,31 @@ var (
 	SQLitePath            string
 	EnableMysql           bool = false
 
-	// UpdateInterval rss抓取间隔
+	// UpdateInterval RSS fetching interval
 	UpdateInterval int = 10
 
-	// ErrorThreshold rss源抓取错误阈值
+	// ErrorThreshold Error threshold for RSS source fetching
 	ErrorThreshold uint = 100
 
-	// MessageTpl rss更新推送模版
+	// MessageTpl RSS update push template
 	MessageTpl *template.Template
 
-	// MessageMode telegram消息渲染模式
+	// MessageMode Telegram message rendering mode
 	MessageMode tb.ParseMode
 
-	// TelegramEndpoint telegram bot 服务器地址，默认为空
+	// TelegramEndpoint Telegram bot server address, default is empty
 	TelegramEndpoint string = tb.DefaultApiURL
 
 	// UserAgent User-Agent
 	UserAgent string
 
-	// RunMode 运行模式 Release / Debug
+	// RunMode Running mode Release / Debug
 	RunMode RunType = ReleaseMode
 
-	// AllowUsers 允许使用bot的用户
+	// AllowUsers Users allowed to use the bot
 	AllowUsers []int64
 
-	// DBLogMode 是否打印数据库日志
+	// DBLogMode Whether to print database logs
 	DBLogMode bool = false
 )
 
@@ -67,7 +66,7 @@ const (
 {{.PreviewText}}
 -----------------------------
 {{- end}}{{if .EnableTelegraph}}
-{{.ContentTitle}} <a href="{{.TelegraphURL}}">Telegraph</a> | <a href="{{.RawLink}}">原文</a>
+{{.ContentTitle}} <a href="{{.TelegraphURL}}">Telegraph</a> | <a href="{{.RawLink}}">Original</a>
 {{- else }}
 <a href="{{.RawLink}}">{{.ContentTitle}}</a>
 {{- end }}
@@ -78,7 +77,7 @@ const (
 {{.PreviewText}}
 -----------------------------
 {{- end}}{{if .EnableTelegraph}}
-{{.ContentTitle}} [Telegraph]({{.TelegraphURL}}) | [原文]({{.RawLink}})
+{{.ContentTitle}} [Telegraph]({{.TelegraphURL}}) | [Original]({{.RawLink}})
 {{- else }}
 [{{.ContentTitle}}]({{.RawLink}})
 {{- end }}

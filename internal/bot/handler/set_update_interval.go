@@ -27,7 +27,7 @@ func (s *SetUpdateInterval) Command() string {
 }
 
 func (s *SetUpdateInterval) Description() string {
-	return "设置订阅刷新频率"
+	return "Configure the update & refresh time interval for subscription feeds"
 }
 
 func (s *SetUpdateInterval) getMessageWithoutMention(ctx tb.Context) string {
@@ -42,12 +42,12 @@ func (s *SetUpdateInterval) Handle(ctx tb.Context) error {
 	msg := s.getMessageWithoutMention(ctx)
 	args := strings.Split(strings.TrimSpace(msg), " ")
 	if len(args) < 2 {
-		return ctx.Reply("/setinterval [interval] [sourceID] 设置订阅刷新频率（可设置多个sub id，以空格分割）")
+		return ctx.Reply("/setinterval [interval] [source_id] Configure the refresh or update interval for subscription feeds, default unit of time is minute (Configuration for multiple sub_id is allowed by splitting with spaces)") 
 	}
 
 	interval, err := strconv.Atoi(args[0])
 	if interval <= 0 || err != nil {
-		return ctx.Reply("请输入正确的抓取频率")
+		return ctx.Reply("Please enter the correct update time interval") 
 	}
 
 	subscribeUserID := ctx.Message().Chat.ID
@@ -62,10 +62,10 @@ func (s *SetUpdateInterval) Handle(ctx tb.Context) error {
 			context.Background(), subscribeUserID, sourceID, interval,
 		); err != nil {
 			log.Errorf("SetSubscriptionInterval failed, %v", err)
-			return ctx.Reply("抓取频率设置失败!")
+			return ctx.Reply("Failed to configure time intervals!")
 		}
 	}
-	return ctx.Reply("抓取频率设置成功!")
+	return ctx.Reply("Successfully configured time intervals!")
 }
 
 func (s *SetUpdateInterval) Middlewares() []tb.MiddlewareFunc {

@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	// Logger 日志对象
+	// Logger log target
 	Logger       *zap.Logger
 	globalLogger *zap.Logger
 	zapConfig    zap.Config
@@ -26,7 +26,7 @@ func init() {
 		zapConfig.EncoderConfig = zap.NewProductionEncoderConfig()
 	}
 
-	//日志时间戳人类可读
+	// Log timestamp in human-readable format
 	zapConfig.EncoderConfig.EncodeTime = zapcore.RFC3339TimeEncoder
 
 	logFile := config.GetString("log.file")

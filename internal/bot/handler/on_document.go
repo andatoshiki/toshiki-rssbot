@@ -37,18 +37,18 @@ func (o *OnDocument) Description() string {
 
 func (o *OnDocument) getOPML(ctx tb.Context) (*opml.OPML, error) {
 	if !strings.HasSuffix(ctx.Message().Document.FileName, ".opml") {
-		return nil, errors.New("请发送正确的 OPML 文件")
+		return nil, errors.New("Please send the correct OPML file")
 	}
 
 	fileRead, err := o.bot.File(&ctx.Message().Document.File)
 	if err != nil {
-		return nil, errors.New("获取文件失败")
+		return nil, errors.New("Failed to fetch file attachment")
 	}
 
 	opmlFile, err := opml.ReadOPML(fileRead)
 	if err != nil {
 		log.Errorf("parser opml failed, %v", err)
-		return nil, errors.New("获取文件失败")
+		return nil, errors.New("Failed to fetch file attachment")
 	}
 	return opmlFile, nil
 }
@@ -103,9 +103,9 @@ func (o *OnDocument) Handle(ctx tb.Context) error {
 	wg.Wait()
 
 	var msg strings.Builder
-	msg.WriteString(fmt.Sprintf("<b>导入成功：%d，导入失败：%d</b>\n", successIndex, failIndex))
+	msg.WriteString(fmt.Sprintf("<b>Number of successfully imported sources: %d, numbers of failed sources imported: %d</b>\n", successIndex, failIndex))
 	if successIndex != 0 {
-		msg.WriteString("<b>以下订阅源导入成功:</b>\n")
+		msg.WriteString("<b>Successfully imported all subscription sources below:</b>\n")
 		for i := 0; i < successIndex; i++ {
 			line := successImportList[i]
 			if line.Text != "" {
@@ -121,7 +121,7 @@ func (o *OnDocument) Handle(ctx tb.Context) error {
 	}
 
 	if failIndex != 0 {
-		msg.WriteString("<b>以下订阅源导入失败:</b>\n")
+		msg.WriteString("<b>Failed to import all subscription sources below:</b>\n")
 		for i := 0; i < failIndex; i++ {
 			line := failImportList[i]
 			if line.Text != "" {

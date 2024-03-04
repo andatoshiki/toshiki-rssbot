@@ -43,7 +43,7 @@ func (b *SubscriptionSwitchButton) Handle(ctx tb.Context) error {
 	attachData, err := session.UnmarshalAttachment(ctx.Callback().Data)
 	subscriberID := attachData.GetUserId()
 	if subscriberID != c.Sender.ID {
-		// 如果订阅者与按钮点击者id不一致，需要验证管理员权限
+		// If the subscriber ID is different from the button user's ID, administrator permission needs to be verified.
 		channelChat, err := b.bot.ChatByID(subscriberID)
 		if err != nil {
 			return ctx.Respond(&tb.CallbackResponse{Text: "error"})
@@ -70,7 +70,7 @@ func (b *SubscriptionSwitchButton) Handle(ctx tb.Context) error {
 
 	text := new(bytes.Buffer)
 	_ = t.Execute(text, map[string]interface{}{"source": source, "sub": sub, "Count": config.ErrorThreshold})
-	_ = ctx.Respond(&tb.CallbackResponse{Text: "修改成功"})
+	_ = ctx.Respond(&tb.CallbackResponse{Text: "Successfully modified"})
 	return ctx.Edit(
 		text.String(),
 		&tb.SendOptions{ParseMode: tb.ModeHTML},

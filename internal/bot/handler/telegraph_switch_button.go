@@ -46,7 +46,7 @@ func (b *TelegraphSwitchButton) Handle(ctx tb.Context) error {
 	}
 	subscriberID := attachData.GetUserId()
 	if subscriberID != c.Sender.ID {
-		// 如果订阅者与按钮点击者id不一致，需要验证管理员权限
+
 		channelChat, err := b.bot.ChatByID(subscriberID)
 		if err != nil {
 			return ctx.Respond(&tb.CallbackResponse{Text: "error"})
@@ -74,7 +74,7 @@ func (b *TelegraphSwitchButton) Handle(ctx tb.Context) error {
 
 	text := new(bytes.Buffer)
 	_ = t.Execute(text, map[string]interface{}{"source": source, "sub": sub, "Count": config.ErrorThreshold})
-	_ = ctx.Respond(&tb.CallbackResponse{Text: "修改成功"})
+	_ = ctx.Respond(&tb.CallbackResponse{Text: "Successfully modified"})
 	return ctx.Edit(
 		text.String(),
 		&tb.SendOptions{ParseMode: tb.ModeHTML},

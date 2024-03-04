@@ -1,33 +1,38 @@
-name: Release
+name: release
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+        - 'master'
+        - 'dev'
+    tags:
+      - '*'
+
+permissions:
+  contents: write
 
 jobs:
-  linux-releases-matrix:
-    name: Release Matrix
+  goreleaser:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        goos: [ linux ]
-        goarch: ["386", amd64]
-
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Set APP_VERSION env
-        run: echo ::`echo -n name=APP_VERSION`::$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev )
-      - name: Set BUILD_TIME env
-        run: echo ::`echo -n name=BUILD_TIME`::$(date)
-      - name: Environment Printer
-        uses: managedkaos/print-env@v1.0
-
-      - uses: wangyoucao577/go-release-action@master
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: ${{ matrix.goos }}
-          goarch: ${{ matrix.goarch }}
-          extra_files: config.yml.sample
-          build_flags: -v
-          ldflags: -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.commit=${{ github.sha }}' -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.date=${{ env.BUILD_TIME }}' -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.version=${{ env.APP_VERSION }}'
+          fetch-depth: 0
+      - name: Fetch all tags
+        run: git fetch --force --tags
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

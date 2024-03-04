@@ -31,21 +31,20 @@ func (l *ListSubscription) Command() string {
 }
 
 func (l *ListSubscription) Description() string {
-	return "已订阅的RSS源"
+	return "All subscribed rss source feeds"
 }
 
 func (l *ListSubscription) listChatSubscription(ctx tb.Context) error {
 	// private chat or group
 	if ctx.Chat().Type != tb.ChatPrivate && !chat.IsChatAdmin(ctx.Bot(), ctx.Chat(), ctx.Sender().ID) {
-		// 无权限
-		return ctx.Send("无权限")
+		return ctx.Send("No permission or access rights")
 	}
 
 	stdCtx := context.Background()
 	sources, err := l.core.GetUserSubscribedSources(stdCtx, ctx.Chat().ID)
 	if err != nil {
 		log.Errorf("GetUserSubscribedSources failed, %v", err)
-		return ctx.Send("获取订阅错误")
+		return ctx.Send("Errors or failures to fetch subscription list")
 	}
 
 	return l.replaySubscribedSources(ctx, sources)
@@ -54,18 +53,18 @@ func (l *ListSubscription) listChatSubscription(ctx tb.Context) error {
 func (l *ListSubscription) listChannelSubscription(ctx tb.Context, channelName string) error {
 	channelChat, err := ctx.Bot().ChatByUsername(channelName)
 	if err != nil {
-		return ctx.Send("获取频道信息错误")
+		return ctx.Send("Failed to fetch channel information")
 	}
 
 	if !chat.IsChatAdmin(ctx.Bot(), channelChat, ctx.Sender().ID) {
-		return ctx.Send("非频道管理员无法执行此操作")
+		return ctx.Send("Bot operational executions by non-administrative users of chanel are not permitted") 
 	}
 
 	stdCtx := context.Background()
 	sources, err := l.core.GetUserSubscribedSources(stdCtx, channelChat.ID)
 	if err != nil {
 		log.Errorf("GetUserSubscribedSources failed, %v", err)
-		return ctx.Send("获取订阅错误")
+		return ctx.Send("Errors or failures to fetch subscriptions")
 	}
 	return l.replaySubscribedSources(ctx, sources)
 }
@@ -84,10 +83,10 @@ func (l *ListSubscription) Middlewares() []tb.MiddlewareFunc {
 
 func (l *ListSubscription) replaySubscribedSources(ctx tb.Context, sources []*model.Source) error {
 	if len(sources) == 0 {
-		return ctx.Send("订阅列表为空")
+		return ctx.Send("Current subscription list is currently empty") 
 	}
 	var msg strings.Builder
-	msg.WriteString(fmt.Sprintf("共订阅%d个源，订阅列表\n", len(sources)))
+	msg.WriteString(fmt.Sprintf("Total of %d subscription(s), subscription list\n", len(sources)))
 	count := 0
 	for i := range sources {
 		msg.WriteString(fmt.Sprintf("[[%d]] [%s](%s)\n", sources[i].ID, sources[i].Title, sources[i].Link))

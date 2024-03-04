@@ -22,7 +22,7 @@ func (p *Ping) Description() string {
 }
 
 func (p *Ping) Handle(ctx tb.Context) error {
-	return ctx.Send("pong")
+	return ctx.Send("Ping request successfully received and responds `pong`", &tb.SendOptions{ParseMode: tb.ModeMarkdown})
 }
 
 func (p *Ping) Middlewares() []tb.MiddlewareFunc {

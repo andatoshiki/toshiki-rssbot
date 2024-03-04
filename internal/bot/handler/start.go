@@ -20,12 +20,12 @@ func (s *Start) Command() string {
 }
 
 func (s *Start) Description() string {
-	return "开始使用"
+	return "Start using the bot"
 }
 
 func (s *Start) Handle(ctx tb.Context) error {
 	log.Infof("/start id: %d", ctx.Chat().ID)
-	return ctx.Send(fmt.Sprintf("你好，欢迎使用flowerss。"))
+	return ctx.Send(fmt.Sprintf("H"))
 }
 
 func (s *Start) Middlewares() []tb.MiddlewareFunc {

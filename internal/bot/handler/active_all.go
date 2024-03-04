@@ -23,7 +23,7 @@ func (a *ActiveAll) Command() string {
 }
 
 func (a *ActiveAll) Description() string {
-	return "开启抓取订阅更新"
+	return "Start fetching subscription updates"
 }
 
 func (a *ActiveAll) Handle(ctx tb.Context) error {
@@ -35,19 +35,19 @@ func (a *ActiveAll) Handle(ctx tb.Context) error {
 
 	source, err := a.core.GetUserSubscribedSources(context.Background(), subscribeUserID)
 	if err != nil {
-		return ctx.Reply("系统错误")
+		return ctx.Reply("Internal service error")
 	}
 
 	for _, s := range source {
 		err := a.core.EnableSourceUpdate(context.Background(), s.ID)
 		if err != nil {
-			return ctx.Reply("激活失败")
+			return ctx.Reply("Activation failed")
 		}
 	}
 
-	reply := "订阅已全部开启"
+	reply := "All subscriptions has been enabled and activated"
 	if mentionChat != nil {
-		reply = fmt.Sprintf("频道 [%s](https://t.me/%s) 订阅已全部开启", mentionChat.Title, mentionChat.Username)
+		reply = fmt.Sprintf("Channel [%s](https://t.me/%s) has enabled and activated all feed subscription sources update", mentionChat.Title, mentionChat.Username)
 	}
 
 	return ctx.Reply(

@@ -16,26 +16,26 @@ func (h *Help) Command() string {
 }
 
 func (h *Help) Description() string {
-	return "帮助"
+	return "Help"
 }
 
 func (h *Help) Handle(ctx tb.Context) error {
 	message := `
-	命令：
-	/sub 订阅源
-	/unsub  取消订阅
-	/list 查看当前订阅源
-	/set 设置订阅
-	/check 检查当前订阅
-	/setfeedtag 设置订阅标签
-	/setinterval 设置订阅刷新频率
-	/activeall 开启所有订阅
-	/pauseall 暂停所有订阅
-	/help 帮助
-	/import 导入 OPML 文件
-	/export 导出 OPML 文件
-	/unsuball 取消所有订阅
-	详细使用方法请看：https://github.com/andatoshiki/toshiki-rssbot
+	/sub Subscribe an RSS feed source to your feed list
+	/unsub  Remove a subscription source from your existing feed list
+	/list View all existing subscription sources
+	/set Configure & manage subscription list
+	/check Inspect the existing subscribed feed list status
+	/setfeedtag Append a custom tag to a subscription source
+	/setinterval Configure the refresh interval for a subscription source
+	/activeall Resume & enable all existing subscription sources
+	/pauseall Pause & terminate all existing subscription sources
+	/help View help & support information
+	/import Import your subscription list to an OPML file
+	/export Export your subscription list to an OPML file
+	/unsuball Remove and cancel all existing subscriptions
+	Visit for more detailed bot usage & affiliated documentation at https://note.toshiki.dev/
+	Made with love and coffee by @andatoshiki at @toshikidev in Arizona State University & proudly open sourced on GitLab
 	`
 	return ctx.Send(message)
 }

@@ -27,8 +27,8 @@ func init() {
 		return
 	}
 
-	workDirFlag := flag.String("d", "./", "work directory of flowerss")
-	configFile := flag.String("c", "", "config file of flowerss")
+	workDirFlag := flag.String("d", "./", "work directory of toshiki-rssbot")
+	configFile := flag.String("c", "", "config file of toshiki-rssbot")
 	printVersionFlag := flag.Bool("v", false, "prints toshiki-rssbot version")
 
 	testTpl := flag.Bool("testtpl", false, "test template")
@@ -185,8 +185,8 @@ func (t TplData) replaceHTMLTags(s string) string {
 func validateTPL() {
 	testData := []TplData{
 		{
-			"RSS 源标识 - 无预览无telegraph的消息",
-			"这是标题",
+			"RSS Source Identifier - Message without preview or telegraph",
+			"Title",
 			"https://www.github.com/",
 			"",
 			"",
@@ -194,21 +194,21 @@ func validateTPL() {
 			false,
 		},
 		{
-			"RSS源标识 - 有预览无telegraph的消息",
-			"这是标题",
+			"RSS Source Identifier - Message with preview or telegraph",
+			"Title",
 			"https://www.github.com/",
-			"这里是很长很长很长的消息预览字数补丁紫薯补丁紫薯补丁紫薯补丁紫薯补丁[1](123)",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.[1](123)",
 			"",
-			"#标签",
+			"#tag",
 			false,
 		},
 		{
-			"RSS源标识 - 有预览有telegraph的消息",
-			"这是标题",
+			"RSS Source Identifier - Message with preview or telegraph",
+			"Title",
 			"https://www.github.com/",
-			"这里是很长很长很长的消息预览字数补丁紫薯补丁紫薯补丁紫薯补丁紫薯补丁",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 			"https://telegra.ph/markdown-07-07",
-			"#标签1 #标签2",
+			"#tag1 #tag2",
 			true,
 		},
 	}
