@@ -4,7 +4,7 @@ env:
 builds:
   - env:
       - CGO_ENABLED=0
-    ldflags: -s -w -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.commit=${{ github.sha }}' -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.date=${{ env.BUILD_TIME }}' -X 'github.com/andatoshiki/toshiki-rssbot/internal/config.version=${{ env.APP_VERSION }}'
+    ldflags: -s -w -X github.com/andatoshiki/toshiki-rssbot/internal/config.commit=${{ github.sha }} -X github.com/andatoshiki/toshiki-rssbot/internal/config.date=${{ env.BUILD_TIME }} -X github.com/andatoshiki/toshiki-rssbot/internal/config.version=${{ env.APP_VERSION }}
     goos:
       - linux
       - windows
