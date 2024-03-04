@@ -13,6 +13,11 @@ type UserStorageImpl struct {
 	db *gorm.DB
 }
 
+// CreateUser implements User.
+func (*UserStorageImpl) CreateUser(ctx context.Context, user *model.User) error {
+	panic("unimplemented")
+}
+
 func NewUserStorageImpl(db *gorm.DB) *UserStorageImpl {
 	return &UserStorageImpl{db: db}
 }

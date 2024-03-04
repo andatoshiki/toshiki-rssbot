@@ -89,8 +89,8 @@ func TestCore_GetUserSubscribedSources(t *testing.T) {
 	sourceID2 := uint(102)
 	subscriptionsResult := &storage.GetSubscriptionsResult{
 		Subscriptions: []*model.Subscribe{
-			{SourceID: sourceID1},
-			{SourceID: sourceID2},
+			&model.Subscribe{SourceID: sourceID1},
+			&model.Subscribe{SourceID: sourceID2},
 		},
 	}
 	t.Run(

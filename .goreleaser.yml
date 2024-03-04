@@ -19,15 +19,16 @@ builds:
         - 7
     ignore:
       - goos: linux
-        goarch: amd64_v1
-      - goos: windows
-        goarch: arm
-      - goos: linux
-        goarch: arm_7
-      - goos: darwin
-        goarch: arm64
-      - goos: darwin
-        goarch: 386
+        goarch: amd64
+        goamd64: v1
+      # - goos: windows
+      #   goarch: arm
+      # - goos: linux
+      #   goarch: arm_7
+      # - goos: darwin
+      #   goarch: arm64
+      # - goos: darwin
+      #   goarch: 386
 checksum:
   name_template: '{{ .ProjectName }}_checksums.txt'
 archives:
