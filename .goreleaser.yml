@@ -74,7 +74,3 @@ changelog:
       order: 4
 release:
   draft: true
-
-snapshot:
-checksum:
-  name_template: 'checksums.txt'
