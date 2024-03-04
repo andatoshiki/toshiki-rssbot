@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/andatoshiki/sqlite"
 	"github.com/stretchr/testify/assert"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
 	"github.com/andatoshiki/toshiki-rssbot/internal/model"

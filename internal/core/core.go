@@ -8,16 +8,16 @@ import (
 	"sync"
 	"time"
 
+	"github.com/andatoshiki/sqlite"
 	"github.com/mmcdole/gofeed"
 	"gorm.io/driver/mysql"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
 	"github.com/andatoshiki/toshiki-rssbot/internal/config"
 	"github.com/andatoshiki/toshiki-rssbot/internal/feed"
 	"github.com/andatoshiki/toshiki-rssbot/internal/log"
 	"github.com/andatoshiki/toshiki-rssbot/internal/model"
-	"github.com/andatoshiki/toshiki-rssbot/internal/preview"
+	tgraph "github.com/andatoshiki/toshiki-rssbot/internal/preview"
 	"github.com/andatoshiki/toshiki-rssbot/internal/storage"
 	"github.com/andatoshiki/toshiki-rssbot/pkg/client"
 )
