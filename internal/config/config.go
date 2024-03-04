@@ -11,6 +11,7 @@ import (
 
 type RunType string
 
+
 var (
 	version = "dev"
 	commit  = "none"
