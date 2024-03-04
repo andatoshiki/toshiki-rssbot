@@ -9,43 +9,32 @@ builds:
       - linux
       - windows
       - darwin
+      - freebsd
+      - openbsd
+      - netbsd
     goarch:
       - 386
       - amd64
       - arm
       - arm64
+      - s390x
+      - loong64
+      - mips
+      - mips64
     goarm:
-        - 6
-        - 7
-    ignore:
-      - goos: linux
-        goarch: amd64
-        goamd64: v1
-      # - goos: windows
-      #   goarch: arm
-      # - goos: linux
-      #   goarch: arm_7
-      # - goos: darwin
-      #   goarch: arm64
-      # - goos: darwin
-      #   goarch: 386
+      - 5
+      - 6
+      - 7
+    goamd64:
+      - v1
+      - v2
+      - v3
+      - v4
 checksum:
-  name_template: '{{ .ProjectName }}_checksums.txt'
+  name_template: '{{ .ProjectName }}-checksums.txt'
 archives:
-  # - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-  #   replacements:
-  #     darwin: Darwin
-  #     linux: Linux
-  #     windows: Windows
-  #     386: 32bit
-  #     amd64: 64bit
   - name_template: >-
-      {{- .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}64bit
-      {{- else if eq .Arch "386" }}32bit
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end -}}
+      {{- .ProjectName }}-{{- title .Os }}-{{ .Arch }}-{{- if .Arm }}v{{ .Arm }}{{- else if .Amd64 }}{{ .Amd64 }}{{ end -}}
     format_overrides:
       - goos: windows
         format: zip
