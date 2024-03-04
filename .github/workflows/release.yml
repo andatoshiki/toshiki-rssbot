@@ -24,7 +24,7 @@ jobs:
       - name: Fetch all tags
         run: git fetch --force --tags
       - name: Install requried depdencies
-        run: sudo apt install clang llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make  tar xz-utils bzip2 gzip sed cpio libbz2-dev
+        run: sudo apt install clang llvm-dev libxml2-dev uuid-dev libssl-dev bash patch make  tar xz-utils bzip2 gzip sed cpio libbz2-dev gcc-multilib g++-multilib
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
