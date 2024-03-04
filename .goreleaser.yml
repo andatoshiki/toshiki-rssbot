@@ -30,6 +30,10 @@ builds:
       - v2
       - v3
       - v4
+    ignore:
+      - goos: linux
+        goarch: loong64
+    
 checksum:
   name_template: '{{ .ProjectName }}-checksums.txt'
 archives:
