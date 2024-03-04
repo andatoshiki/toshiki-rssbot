@@ -3,6 +3,7 @@ name: Build and Release toshiki-rssbot V2
 on:
   release:
     types: [created]
+  push:
 
 jobs:
   linux-releases-matrix:
