@@ -131,7 +131,7 @@ func (c *Core) Init() error {
 	return nil
 }
 
-// GetUserSubscribedSources gets the subscribed sources of a user
+// GetUserSubscribedSources 获取用户订阅的订阅源
 func (c *Core) GetUserSubscribedSources(ctx context.Context, userID int64) ([]*model.Source, error) {
 	opt := &storage.GetSubscriptionsOptions{Count: -1}
 	result, err := c.subscriptionStorage.GetSubscriptionsByUserID(ctx, userID, opt)
@@ -151,7 +151,7 @@ func (c *Core) GetUserSubscribedSources(ctx context.Context, userID int64) ([]*m
 	return sources, nil
 }
 
-// AddSubscription adds a subscription
+// AddSubscription 添加订阅
 func (c *Core) AddSubscription(ctx context.Context, userID int64, sourceID uint) error {
 	exist, err := c.subscriptionStorage.SubscriptionExist(ctx, userID, sourceID)
 	if err != nil {
@@ -173,7 +173,7 @@ func (c *Core) AddSubscription(ctx context.Context, userID int64, sourceID uint)
 	return c.subscriptionStorage.AddSubscription(ctx, subscription)
 }
 
-// Unsubscribe unsubscribes a user from a source
+// Unsubscribe 添加订阅
 func (c *Core) Unsubscribe(ctx context.Context, userID int64, sourceID uint) error {
 	exist, err := c.subscriptionStorage.SubscriptionExist(ctx, userID, sourceID)
 	if err != nil {
@@ -184,13 +184,13 @@ func (c *Core) Unsubscribe(ctx context.Context, userID int64, sourceID uint) err
 		return ErrSubscriptionNotExist
 	}
 
-	// Remove the user's subscription
+	// 移除该用户订阅
 	_, err = c.subscriptionStorage.DeleteSubscription(ctx, userID, sourceID)
 	if err != nil {
 		return err
 	}
 
-	// Get the subscription count of the source
+	// 获取源的订阅数量
 	count, err := c.subscriptionStorage.CountSourceSubscriptions(ctx, sourceID)
 	if err != nil {
 		return err
@@ -200,14 +200,14 @@ func (c *Core) Unsubscribe(ctx context.Context, userID int64, sourceID uint) err
 		return nil
 	}
 
-	// If the source no longer has any subscribed users, remove the source
+	// 如果源不再有订阅用户，移除该订阅源
 	if err := c.removeSource(ctx, sourceID); err != nil {
 		return err
 	}
 	return nil
 }
 
-// removeSource removes a source
+// removeSource 移除订阅源
 func (c *Core) removeSource(ctx context.Context, sourceID uint) error {
 	if err := c.sourceStorage.Delete(ctx, sourceID); err != nil {
 		return err
@@ -221,7 +221,7 @@ func (c *Core) removeSource(ctx context.Context, sourceID uint) error {
 	return nil
 }
 
-// GetSourceByURL gets a subscribed source by URL
+// GetSourceByURL 获取用户订阅的订阅源
 func (c *Core) GetSourceByURL(ctx context.Context, sourceURL string) (*model.Source, error) {
 	source, err := c.sourceStorage.GetSourceByURL(ctx, sourceURL)
 	if err != nil {
@@ -233,7 +233,7 @@ func (c *Core) GetSourceByURL(ctx context.Context, sourceURL string) (*model.Sou
 	return source, nil
 }
 
-// GetSource gets a subscribed source
+// GetSource 获取用户订阅的订阅源
 func (c *Core) GetSource(ctx context.Context, id uint) (*model.Source, error) {
 	source, err := c.sourceStorage.GetSource(ctx, id)
 	if err != nil {
@@ -245,12 +245,12 @@ func (c *Core) GetSource(ctx context.Context, id uint) (*model.Source, error) {
 	return source, nil
 }
 
-// GetSources gets all subscribed sources
+// GetSource 获取用户订阅的订阅源
 func (c *Core) GetSources(ctx context.Context) ([]*model.Source, error) {
 	return c.sourceStorage.GetSources(ctx)
 }
 
-// CreateSource creates a new source
+// CreateSource 创建订阅源
 func (c *Core) CreateSource(ctx context.Context, sourceURL string) (*model.Source, error) {
 	s, err := c.GetSourceByURL(ctx, sourceURL)
 	if err == nil {
@@ -270,7 +270,7 @@ func (c *Core) CreateSource(ctx context.Context, sourceURL string) (*model.Sourc
 	s = &model.Source{
 		Title:      rssFeed.Title,
 		Link:       sourceURL,
-		ErrorCount: config.ErrorThreshold + 1, // Avoid task update
+		ErrorCount: config.ErrorThreshold + 1, // 避免task更新
 	}
 
 	if err := c.sourceStorage.AddSource(ctx, s); err != nil {
@@ -299,7 +299,7 @@ func (c *Core) AddSourceContents(
 		}
 		content := &model.Content{
 			Title:        strings.Trim(item.Title, " "),
-			Description:  item.Content, // Replace all kinds of <br> tag
+			Description:  item.Content, //replace all kinds of <br> tag
 			SourceID:     source.ID,
 			RawID:        item.GUID,
 			HashID:       model.GenHashID(source.Link, item.GUID),
@@ -318,7 +318,7 @@ func (c *Core) AddSourceContents(
 	return contents, nil
 }
 
-// UnsubscribeAllSource unsubscribes a user from all sources
+// UnsubscribeAllSource 添加订阅
 func (c *Core) UnsubscribeAllSource(ctx context.Context, userID int64) error {
 	sources, err := c.GetUserSubscribedSources(ctx, userID)
 	if err != nil {
@@ -340,7 +340,7 @@ func (c *Core) UnsubscribeAllSource(ctx context.Context, userID int64) error {
 	return nil
 }
 
-// GetSubscription gets a subscription
+// GetSubscription 获取订阅
 func (c *Core) GetSubscription(ctx context.Context, userID int64, sourceID uint) (*model.Subscribe, error) {
 	subscription, err := c.subscriptionStorage.GetSubscription(ctx, userID, sourceID)
 	if err != nil {
@@ -352,7 +352,7 @@ func (c *Core) GetSubscription(ctx context.Context, userID int64, sourceID uint)
 	return subscription, nil
 }
 
-// SetSubscriptionTag sets the tags of a subscription
+// SetSubscriptionTag 设置订阅标签
 func (c *Core) SetSubscriptionTag(ctx context.Context, userID int64, sourceID uint, tags []string) error {
 	subscription, err := c.GetSubscription(ctx, userID, sourceID)
 	if err != nil {
@@ -363,7 +363,7 @@ func (c *Core) SetSubscriptionTag(ctx context.Context, userID int64, sourceID ui
 	return c.subscriptionStorage.UpdateSubscription(ctx, userID, sourceID, subscription)
 }
 
-// SetSubscriptionInterval sets the update interval of a subscription
+// SetSubscriptionInterval
 func (c *Core) SetSubscriptionInterval(ctx context.Context, userID int64, sourceID uint, interval int) error {
 	subscription, err := c.GetSubscription(ctx, userID, sourceID)
 	if err != nil {
@@ -374,12 +374,12 @@ func (c *Core) SetSubscriptionInterval(ctx context.Context, userID int64, source
 	return c.subscriptionStorage.UpdateSubscription(ctx, userID, sourceID, subscription)
 }
 
-// EnableSourceUpdate enables source update for a source
+// EnableSourceUpdate 开启订阅源更新
 func (c *Core) EnableSourceUpdate(ctx context.Context, sourceID uint) error {
 	return c.ClearSourceErrorCount(ctx, sourceID)
 }
 
-// DisableSourceUpdate disables source update for a source
+// DisableSourceUpdate 关闭订阅源更新
 func (c *Core) DisableSourceUpdate(ctx context.Context, sourceID uint) error {
 	source, err := c.GetSource(ctx, sourceID)
 	if err != nil {
@@ -390,7 +390,7 @@ func (c *Core) DisableSourceUpdate(ctx context.Context, sourceID uint) error {
 	return c.sourceStorage.UpsertSource(ctx, sourceID, source)
 }
 
-// ClearSourceErrorCount clears the error count of a source
+// ClearSourceErrorCount 清空订阅源错误计数
 func (c *Core) ClearSourceErrorCount(ctx context.Context, sourceID uint) error {
 	source, err := c.GetSource(ctx, sourceID)
 	if err != nil {
@@ -401,7 +401,7 @@ func (c *Core) ClearSourceErrorCount(ctx context.Context, sourceID uint) error {
 	return c.sourceStorage.UpsertSource(ctx, sourceID, source)
 }
 
-// SourceErrorCountIncr increments the error count of a source
+// SourceErrorCountIncr 增加订阅源错误计数
 func (c *Core) SourceErrorCountIncr(ctx context.Context, sourceID uint) error {
 	source, err := c.GetSource(ctx, sourceID)
 	if err != nil {
