@@ -23,7 +23,7 @@ builds:
         - 7
     ignore:
       - goos: linux
-        goarch: arm_v1
+        goarch: amd_v1
       # - goos: windows
       #   goarch: arm
       # - goos: linux
