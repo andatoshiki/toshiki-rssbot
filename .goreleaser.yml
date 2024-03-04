@@ -4,8 +4,10 @@ env:
 builds:
   - env:
       - CGO_ENABLED=1
-      - CC=o64-clang
-      - CXX=o64-clang++
+      # - CC=o64-clang
+      # - CXX=o64-clang++
+      - CC=/home/runner/work/osxcross/target/bin/o64-clang
+      - CXX=/home/runner/work/osxcross/target/bin/o64-clang++
     ldflags: -s -w -X github.com/andatoshiki/toshiki-rssbot/internal/config.version={{.Version}} -X github.com/andatoshiki/toshiki-rssbot/internal/config.date={{.Date}} -X github.com/andatoshiki/toshiki-rssbot/internal/config.commit={{ .ShortCommit }}
     goos:
       - linux
@@ -24,8 +26,8 @@ builds:
     #     goarch: 386
       # - goos: windows
       #   goarch: arm
-      # - goos: windows
-      #   goarch: arm64
+      # - goos: linux
+      #   goarch: arm_7
       # - goos: darwin
       #   goarch: arm64
     #   - goos: darwin
