@@ -21,6 +21,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Set APP_VERSION env
+        run: echo ::`echo -n name=APP_VERSION`::$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev )
+      - name: Set BUILD_TIME env
+        run: echo ::`echo -n name=BUILD_TIME`::$(date)
+      - name: Environment Printer
+        uses: managedkaos/print-env@v1.0
       - name: Fetch all tags
         run: git fetch --force --tags 
       - name: Set up Go
