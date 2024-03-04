@@ -3,7 +3,7 @@ env:
   - GO111MODULE=on
 builds:
   - env:
-      - CGO_ENABLED=1
+      - CGO_ENABLED=0
     ldflags: -s -w -X github.com/andatoshiki/toshiki-rssbot/internal/config.version={{.Version}} -X github.com/andatoshiki/toshiki-rssbot/internal/config.date={{.Date}} -X github.com/andatoshiki/toshiki-rssbot/internal/config.commit={{ .ShortCommit }}
     goos:
       - linux
@@ -19,7 +19,7 @@ builds:
         - 7
     ignore:
       - goos: linux
-        goarch: amd_v1
+        goarch: amd64_v1
       - goos: windows
         goarch: arm
       - goos: linux
