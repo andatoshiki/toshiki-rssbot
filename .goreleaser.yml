@@ -19,8 +19,8 @@ builds:
       - arm64
       - s390x
       - loong64
-      - mips
-      - mips64
+      # - mips
+      # - mips64
     goarm:
       - 5
       - 6
