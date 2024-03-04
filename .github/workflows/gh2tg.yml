@@ -1,6 +1,7 @@
 name: Push repo updates to Telegram
 
 on:
+  workflow_dispatch:
   push:
   pull_request:
     branches: [ master ]
