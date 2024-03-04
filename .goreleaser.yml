@@ -22,8 +22,8 @@ builds:
         - 6
         - 7
     ignore:
-    #   - goos: windows
-    #     goarch: 386
+      - goos: linux
+        goarch: arm_v1
       # - goos: windows
       #   goarch: arm
       # - goos: linux
