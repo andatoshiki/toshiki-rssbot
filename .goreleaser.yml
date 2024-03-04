@@ -33,6 +33,8 @@ builds:
     ignore:
       - goos: linux
         goarch: loong64
+      - goos: linux
+        goarch: 386
     
 checksum:
   name_template: '{{ .ProjectName }}-checksums.txt'
