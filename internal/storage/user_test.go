@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/andatoshiki/sqlite"
+	"github.com/glebarez/go-sqlite"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 

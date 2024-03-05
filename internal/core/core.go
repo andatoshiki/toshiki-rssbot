@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/andatoshiki/sqlite"
+	"github.com/glebarez/go-sqlite"
 	"github.com/mmcdole/gofeed"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
