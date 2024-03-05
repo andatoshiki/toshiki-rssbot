@@ -26,7 +26,7 @@ func NewExport(core *core.Core) *Export {
 }
 
 func (e *Export) Description() string {
-	return "导出OPML"
+	return "Export all subscribed feeds to OML"
 }
 
 func (e *Export) Command() string {
