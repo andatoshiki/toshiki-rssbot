@@ -22,8 +22,10 @@ builds:
       - v3
       - v4
     ignore:
-    #   - goos: windows
-    #     goarch: 386
+      - goos: freebsd
+        goarch: arm
+      - goos: freebsd
+        goarch: arm64
       - goos: windows
         goarch: arm64
       - goos: windows
