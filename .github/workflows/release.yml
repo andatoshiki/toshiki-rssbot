@@ -9,9 +9,11 @@ on:
         - 'dev'
     tags:
       - '*'
+  release:
+    types: 'published'
 
 permissions:
-  contents: write
+  contents: 'write'
 
 jobs:
   goreleaser:
