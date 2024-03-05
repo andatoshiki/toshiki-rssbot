@@ -83,7 +83,7 @@ func (l *ListSubscription) Middlewares() []tb.MiddlewareFunc {
 
 func (l *ListSubscription) replaySubscribedSources(ctx tb.Context, sources []*model.Source) error {
 	if len(sources) == 0 {
-		return ctx.Send("The Current subscription list is empty") 
+		return ctx.Send("The current subscription list is empty") 
 	}
 	var msg strings.Builder
 	msg.WriteString(fmt.Sprintf("Total of %d subscription(s), subscription list\n", len(sources)))
