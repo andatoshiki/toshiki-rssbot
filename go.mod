@@ -17,7 +17,7 @@ require (
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/telebot.v3 v3.1.0
 	gorm.io/driver/mysql v1.3.6
-	gorm.io/gorm v1.25.7-0.20240204074919-46816ad31dde
+	gorm.io/gorm v1.25.7
 )
 
 require (
