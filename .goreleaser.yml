@@ -26,6 +26,8 @@ builds:
         goarch: arm
       - goos: freebsd
         goarch: arm64
+      - goos: freebsd
+        gooarch: 386
       - goos: windows
         goarch: arm64
       - goos: windows
