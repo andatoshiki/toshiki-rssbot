@@ -9,33 +9,25 @@ builds:
       - linux
       - windows
       - darwin
-      - freebsd
-      - openbsd
-      - netbsd
     goarch:
       - 386
       - amd64
       - arm
       - arm64
-      - s390x
-      - loong64
-      # - mips
-      # - mips64
     goarm:
-      - 5
-      - 6
-      - 7
-    goamd64:
-      - v1
-      - v2
-      - v3
-      - v4
+        - 6
+        - 7
     ignore:
-      - goos: linux
-        goarch: loong64
-      - goos: linux
+      - goos: windows
         goarch: 386
-    
+      - goos: windows
+        goarch: arm
+      - goos: windows
+        goarch: arm64
+      - goos: darwin
+        goarch: arm
+      - goos: darwin
+        goarch: 386
 checksum:
   name_template: '{{ .ProjectName }}-checksums.txt'
 archives:
