@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/andatoshiki/telegraph-go v0.0.1
 	github.com/glebarez/sqlite v1.10.0
-	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-sql-driver/mysql v1.8.0
 	github.com/golang/mock v1.6.0
 	github.com/grokify/html-strip-tags-go v0.0.0-20200923094847-079d207a09f1
 	github.com/mmcdole/gofeed v1.1.3
@@ -21,6 +21,7 @@ require (
 )
 
 require (
+	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/PuerkitoBio/goquery v1.5.1 // indirect
 	github.com/andybalholm/cascadia v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
