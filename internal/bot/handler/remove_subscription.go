@@ -64,7 +64,7 @@ func (s *RemoveSubscription) removeForChannel(ctx tb.Context, channelName string
 	return ctx.Send(
 		fmt.Sprintf(
 			"Successfully unsubscribed [%s](%s) from channel [%s](https://t.me/%s)",
-			channelChat.Title, channelChat.Username, source.Title, source.Link,
+			source.Title, source.Link, channelChat.Title, channelChat.Username,
 		),
 		&tb.SendOptions{DisableWebPagePreview: true, ParseMode: tb.ModeMarkdown},
 	)
